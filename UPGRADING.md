@@ -1,5 +1,40 @@
 # Upgrading
 
+## From 0.7.x to 0.8.0
+
+`0.8.0` raises the platform floor. No adapter API changed, but the
+package no longer installs on the versions below.
+
+### PHP 8.4 and Laravel 12 are the new minimum
+
+`require.php` moved from `^8.3` to `^8.4`, and `illuminate/*` from
+`^11.0|^12.0` to `^12.0||^13.0`. Laravel 11 is gone: `laravel/pao`
+(the agent-output tooling the dev setup depends on) conflicts with
+`laravel/framework <12.0`, and Pest 5 — which the test suite now runs
+on — requires PHP `^8.4`.
+
+Staying on PHP 8.3 or Laravel 11? Pin `sandermuller/laravel-x402:^0.7.0`
+and upgrade the platform before moving on.
+
+Laravel 12 remains supported in `require` but the CI matrix exercises
+Laravel 13 only: Pest 5 needs `symfony/process ^8.1` while Testbench 10
+pins `^7.2`, so the two cannot be installed together. Report anything
+that breaks on Laravel 12 and it will be treated as a bug.
+
+### Typed public constants
+
+Three public constants gained declared types (PHP 8.3 typed constants):
+
+```php
+X402\Laravel\Models\Payment::STATUS_SETTLED       // now: public const string
+X402\Laravel\Models\Payment::STATUS_REJECTED      // now: public const string
+X402\Laravel\Http\Middleware\MiddlewareSpec::TOKEN_PREFIX  // now: public const string
+X402\Laravel\Detection\BotDetector::DEFAULT_PATTERNS        // now: public const array
+```
+
+Reading them is unaffected. A subclass that redeclares one must now use
+a compatible type.
+
 ## From 0.4.x to 0.5.0
 
 `0.5.0` ships two intentional breaking changes. Both surface at runtime
