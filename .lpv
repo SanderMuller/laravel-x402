@@ -10,6 +10,7 @@
 .agents
 .ai
 .cache
+.config
 .claude
 .editorconfig
 .github

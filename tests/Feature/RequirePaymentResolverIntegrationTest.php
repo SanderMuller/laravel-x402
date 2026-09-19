@@ -101,8 +101,8 @@ it('resolver-returned facilitator is the one fed into PaymentEnforcer', function
     $fake = new FakeFacilitator();
     $wrapped = wrapForFacilitatorTest($fake);
 
-    $resolver = new class ($wrapped) implements FacilitatorResolver {
-        public function __construct(private readonly FacilitatorClient $client) {}
+    $resolver = new readonly class ($wrapped) implements FacilitatorResolver {
+        public function __construct(private FacilitatorClient $client) {}
 
         public function resolve(mixed $context = null): FacilitatorClient
         {
@@ -127,8 +127,8 @@ it('custom-resolver-returned facilitator still fires PaymentSettled events', fun
     $fake = new FakeFacilitator();
     $wrapped = wrapForFacilitatorTest($fake);
 
-    $resolver = new class ($wrapped) implements FacilitatorResolver {
-        public function __construct(private readonly FacilitatorClient $client) {}
+    $resolver = new readonly class ($wrapped) implements FacilitatorResolver {
+        public function __construct(private FacilitatorClient $client) {}
 
         public function resolve(mixed $context = null): FacilitatorClient
         {

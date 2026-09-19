@@ -170,8 +170,8 @@ final readonly class RequirePayment
             streamFactory: $this->psr17,
             version: Version::from(ConfigReader::string($this->config, 'x402.version', 'v1')),
             resourceResolver: static fn (ServerRequestInterface $psr) => $psr->getUri()->getPath(),
-            // Global EnforcementPolicy is checked above (see $globalPredicate); core slot stays null.
-            shouldEnforce: null,
+            // Global EnforcementPolicy is checked above (see $globalPredicate); the
+            // core shouldEnforce slot stays at its null default.
             logger: $this->logger,
         );
 

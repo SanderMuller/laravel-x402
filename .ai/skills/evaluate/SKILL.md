@@ -53,7 +53,7 @@ Read through all changed files and check for:
 | **Logic errors** | Wrong conditions, off-by-one errors, swallowed exceptions |
 | **Missing tests** | Happy paths, failure paths, and edge cases that aren't tested |
 | **Convention violations** | Deviations from project patterns (check sibling files) |
-| **Cross-version compat** | Works on PHP 8.2-8.4 and Laravel 11-13 |
+| **Cross-version compat** | Works on PHP 8.4-8.5 and Laravel 12-13 |
 
 ### Phase 3: Fix Issues
 

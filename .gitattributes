@@ -6,22 +6,15 @@
 *.php diff=php
 
 # Ignore all test and documentation with "export-ignore".
-.agents export-ignore
-.agents/ export-ignore
-.ai/ export-ignore
 .cache export-ignore
-.claude export-ignore
-.claude/ export-ignore
+.config/ export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
-.github/ export-ignore
 .gitignore export-ignore
 .idea export-ignore
 .lpv export-ignore
 .mcp.json export-ignore
-AGENTS.md export-ignore
 CHANGELOG.md export-ignore
-CLAUDE.md export-ignore
 composer.lock export-ignore
 phpstan-baseline.neon export-ignore
 phpstan.neon.dist export-ignore
@@ -33,4 +26,16 @@ tests/ export-ignore
 workbench/ export-ignore
 
 # >>> package-boost (managed) >>>
+.agents/                export-ignore
+.ai/                    export-ignore
+.claude/                export-ignore
+.cursor/                export-ignore
+.cursorrules            export-ignore
+.github/                export-ignore
+.junie/                 export-ignore
+.kiro/                  export-ignore
+.windsurfrules          export-ignore
+AGENTS.md               export-ignore
+CLAUDE.md               export-ignore
+GEMINI.md               export-ignore
 # <<< package-boost (managed) <<<

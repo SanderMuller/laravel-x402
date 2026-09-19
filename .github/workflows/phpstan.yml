@@ -9,12 +9,16 @@ on:
       - '**.php'
       - 'phpstan.neon.dist'
       - 'phpstan-baseline.neon'
+      - 'composer.json'
+      - 'composer.lock'
       - '.github/workflows/phpstan.yml'
   pull_request:
     paths:
       - '**.php'
       - 'phpstan.neon.dist'
       - 'phpstan-baseline.neon'
+      - 'composer.json'
+      - 'composer.lock'
       - '.github/workflows/phpstan.yml'
 
 concurrency:
@@ -26,13 +30,10 @@ jobs:
     name: phpstan
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    defaults:
-      run:
-        working-directory: laravel-x402
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
-          path: laravel-x402
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -43,14 +44,12 @@ jobs:
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v4
-        with:
-          working-directory: laravel-x402
 
       - name: Cache PHPStan results
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
-          path: laravel-x402/.cache/phpstan/
-          key: phpstan-result-cache-${{ hashFiles('laravel-x402/composer.lock', 'laravel-x402/phpstan.neon.dist') }}
+          path: .cache/phpstan/
+          key: phpstan-result-cache-${{ hashFiles('composer.lock', 'phpstan.neon.dist') }}
           restore-keys: phpstan-result-cache-
 
       - name: Run PHPStan

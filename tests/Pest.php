@@ -9,8 +9,12 @@ use X402\Laravel\Facilitator\DispatchingFacilitatorFactory;
 use X402\Laravel\Support\PaymentContextRegistry;
 use X402\Laravel\Tests\TestCase;
 
-uses(TestCase::class)->in('Feature');
+pest()
+    ->extend(TestCase::class)
+    ->in('Feature');
 uses()->in('Arch');
+
+pest()->tia()->locally();
 
 function wrapForFacilitatorTest(FacilitatorClient $inner): DispatchingFacilitator
 {

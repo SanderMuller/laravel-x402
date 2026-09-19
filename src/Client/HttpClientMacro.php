@@ -172,7 +172,7 @@ final class HttpClientMacro
             'verifyingContract' => $challenge->asset,
         ];
 
-        $digest = (new Eip712Hasher())->digest($domain, $message);
+        $digest = new Eip712Hasher()->digest($domain, $message);
         $signature = $wallet->signDigest($digest);
 
         return new PaymentSignature(

@@ -11,6 +11,8 @@ on:
       - 'phpunit.xml'
       - 'composer.json'
       - 'composer.lock'
+      - 'testbench.yaml'
+      - 'workbench/**'
   pull_request:
     paths:
       - '**.php'
@@ -18,6 +20,8 @@ on:
       - 'phpunit.xml'
       - 'composer.json'
       - 'composer.lock'
+      - 'testbench.yaml'
+      - 'workbench/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -27,54 +31,41 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    defaults:
-      run:
-        working-directory: laravel-x402
     strategy:
       fail-fast: false
       matrix:
-        # PHP 8.2 dropped: composer.json requires php ^8.3.
-        # L11 dropped: require-dev laravel/pao ^1.0 hard-conflicts with laravel/framework <12.0.
-        php: ['8.3', '8.4']
-        laravel: ['12.*']
-        stability: [prefer-lowest, prefer-stable]
         include:
-          - laravel: '12.*'
-            testbench: '10.*'
+          # PHP floor is 8.4 — Pest 5 requires PHP ^8.4. Add an '8.5' cell when
+          # the package raises its floor or widens its supported range.
+          # Laravel 12 / testbench 10 cells are NOT testable with Pest 5:
+          # Pest 5 needs symfony/process ^8.1 and testbench 10 pins ^7.2, so the
+          # pair cannot install. `require` still allows Laravel 12 for consumers;
+          # the suite runs on Laravel 13 only.
+          # Floor — lowest supported combo (prefer-lowest)
+          - { php: '8.4', laravel: '13.*', testbench: '11.*', stability: prefer-lowest }
+          # Ceiling — highest supported combo
+          - { php: '8.4', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
+          # Newest supported PHP
+          - { php: '8.5', laravel: '13.*', testbench: '11.*', stability: prefer-stable }
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
-          path: laravel-x402
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, gmp
+          extensions: gmp
           coverage: none
-
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-
-      - name: List installed dependencies
-        run: composer show -D
-
-      - name: Cache PHPUnit results
-        uses: actions/cache@v5
-        with:
-          path: laravel-x402/.phpunit.cache/
-          key: phpunit-cache-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.stability }}-${{ hashFiles('laravel-x402/tests/**') }}
-          restore-keys: phpunit-cache-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.stability }}-
 
       - name: Execute tests
         run: vendor/bin/pest --ci

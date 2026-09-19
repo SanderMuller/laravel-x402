@@ -18,14 +18,12 @@ jobs:
   rector-check:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    defaults:
-      run:
-        working-directory: laravel-x402
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v7
         with:
-          path: laravel-x402
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -36,16 +34,14 @@ jobs:
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v4
-        with:
-          working-directory: laravel-x402
 
       - name: Cache Rector results
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
-            laravel-x402/.cache/rector/
-            laravel-x402/.cache/rectorContainer/
-          key: rector-cache-${{ hashFiles('laravel-x402/rector.php') }}
+            .cache/rector/
+            .cache/rectorContainer/
+          key: rector-cache-${{ hashFiles('rector.php') }}
           restore-keys: rector-cache-
 
       - name: Ensure Rector cache directories exist

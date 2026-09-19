@@ -18,31 +18,28 @@ jobs:
   pint-check:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    defaults:
-      run:
-        working-directory: laravel-x402
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v7
         with:
-          path: laravel-x402
+          persist-credentials: false
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
+          extensions: gmp
           coverage: none
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v4
-        with:
-          working-directory: laravel-x402
 
       - name: Cache Pint results
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
-          path: laravel-x402/.cache/pint/
-          key: pint-cache-${{ hashFiles('laravel-x402/pint.json') }}
+          path: .cache/pint/
+          key: pint-cache-${{ hashFiles('pint.json') }}
           restore-keys: pint-cache-
 
       - name: Run Pint (test)

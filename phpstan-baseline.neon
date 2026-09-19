@@ -1,157 +1,61 @@
 parameters:
 	ignoreErrors:
 		-
-			rawMessage: Cannot access property $not on mixed.
-			identifier: property.nonObject
-			count: 1
-			path: tests/Arch/StructureTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 2
-			path: tests/Feature/AssetRegistryTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 11
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Server\PaymentResponseCache>; assertion is redundant.'
+			identifier: pest.expectation.redundant
+			count: 3
 			path: tests/Feature/CachePaymentResponseTest.php
 
 		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 2
-			path: tests/Feature/CachePaymentResponseTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 2
-			path: tests/Feature/EnforcementPolicyTest.php
-
-		-
-			rawMessage: Cannot access property $headers on mixed.
-			identifier: property.nonObject
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Laravel\Facilitator\ConfiguredFacilitatorResolver>; assertion is impossible.'
+			identifier: pest.expectation.impossible
 			count: 1
-			path: tests/Feature/EnforcementPolicyTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 6
 			path: tests/Feature/FacilitatorResolverTest.php
 
 		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 7
-			path: tests/Feature/MidGapsTest.php
-
-		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 5
-			path: tests/Feature/MidGapsTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\Mixins\Expectation<string|false|null>::$not.
-			identifier: property.notFound
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Laravel\Facilitator\ConfiguredFacilitatorResolver>; assertion is redundant.'
+			identifier: pest.expectation.redundant
 			count: 1
-			path: tests/Feature/MiddlewareSpecTest.php
+			path: tests/Feature/FacilitatorResolverTest.php
 
 		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 7
-			path: tests/Feature/MiddlewareSpecTest.php
-
-		-
-			rawMessage: Cannot access property $not on mixed.
-			identifier: property.nonObject
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Laravel\Facilitator\DispatchingFacilitator>; assertion is redundant.'
+			identifier: pest.expectation.redundant
 			count: 1
-			path: tests/Feature/MiddlewareSpecTest.php
+			path: tests/Feature/FacilitatorResolverTest.php
 
 		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 2
-			path: tests/Feature/MiddlewareSpecTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 2
-			path: tests/Feature/NetworkRegistryTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 2
+			rawMessage: 'Call to internal method X402\Laravel\Support\PaymentContextRegistry::reset() from outside its root namespace X402.'
+			identifier: method.internal
+			count: 1
 			path: tests/Feature/PaymentContextTest.php
 
 		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 2
-			path: tests/Feature/PriceableTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 2
-			path: tests/Feature/RecordPaymentTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 3
-			path: tests/Feature/RequirePaymentFromBotsTest.php
-
-		-
-			rawMessage: Cannot access property $headers on mixed.
-			identifier: property.nonObject
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory>; assertion is redundant.'
+			identifier: pest.expectation.redundant
 			count: 1
-			path: tests/Feature/RequirePaymentFromBotsTest.php
-
-		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 1
-			path: tests/Feature/RequirePaymentFromBotsTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 3
-			path: tests/Feature/RequirePaymentResolverIntegrationTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 1
-			path: tests/Feature/RequirePaymentTest.php
-
-		-
-			rawMessage: Cannot access property $headers on mixed.
-			identifier: property.nonObject
-			count: 2
-			path: tests/Feature/RequirePaymentTest.php
-
-		-
-			rawMessage: Cannot cast mixed to string.
-			identifier: cast.string
-			count: 1
-			path: tests/Feature/RequirePaymentTest.php
-
-		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 10
 			path: tests/Feature/ServiceProviderTest.php
 
 		-
-			rawMessage: Access to an undefined property Pest\PendingCalls\TestCall::$app.
-			identifier: property.notFound
-			count: 4
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory>; assertion is redundant.'
+			identifier: pest.expectation.redundant
+			count: 1
+			path: tests/Feature/ServiceProviderTest.php
+
+		-
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Laravel\Cache\LaravelNonceStore>; assertion is redundant.'
+			identifier: pest.expectation.redundant
+			count: 1
+			path: tests/Feature/ServiceProviderTest.php
+
+		-
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Client\PrivateKeyWallet>; assertion is impossible.'
+			identifier: pest.expectation.impossible
+			count: 2
+			path: tests/Feature/WalletDriverTest.php
+
+		-
+			rawMessage: 'Calling toBeInstanceOf() on Expectation<X402\Client\PrivateKeyWallet>; assertion is redundant.'
+			identifier: pest.expectation.redundant
+			count: 1
 			path: tests/Feature/WalletDriverTest.php

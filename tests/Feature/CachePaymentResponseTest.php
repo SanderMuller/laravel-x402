@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Route;
 use X402\Facilitator\FacilitatorClient;
@@ -12,7 +13,7 @@ use X402\Replay\NonceStoreContract;
 use X402\Server\PaymentResponseCache;
 
 it('registers the x402.cache middleware alias', function (): void {
-    $router = $this->app->make('router');
+    $router = $this->app->make(Router::class);
 
     expect($router->getMiddleware())->toHaveKey('x402.cache');
 });

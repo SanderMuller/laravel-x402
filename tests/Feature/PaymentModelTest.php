@@ -57,8 +57,8 @@ it('persists JSON-cast columns and ULID PK', function (): void {
     expect($reloaded->extensions)->toBe(['receipt' => '0xabc'])
         ->and($reloaded->meta)
         ->toBe(['user_id' => 7])
-        ->and(strlen($reloaded->id))
-        ->toBe(26); // ULID length
+        ->and($reloaded->id)
+        ->toHaveLength(26); // ULID length
 });
 
 it('settled and rejected scopes filter correctly', function (): void {

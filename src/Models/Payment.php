@@ -36,9 +36,9 @@ final class Payment extends Model
 {
     use HasUlids;
 
-    public const STATUS_SETTLED = 'settled';
+    public const string STATUS_SETTLED = 'settled';
 
-    public const STATUS_REJECTED = 'rejected';
+    public const string STATUS_REJECTED = 'rejected';
 
     protected $guarded = [];
 

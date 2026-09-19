@@ -100,7 +100,7 @@ it('emits PaymentRejected and rethrows when inner settle() throws', function ():
     $inner = new class implements FacilitatorClient {
         public function verify(PaymentSignature $signature, PaymentRequired $challenge): VerifyResult
         {
-            return new VerifyResult(isValid: true, invalidReason: null, payer: '0xpayer');
+            return new VerifyResult(isValid: true, payer: '0xpayer');
         }
 
         public function settle(PaymentSignature $signature, PaymentRequired $challenge): SettleResult

@@ -24,7 +24,7 @@ final readonly class BotDetector
     /**
      * @var list<string>
      */
-    public const DEFAULT_PATTERNS = UpstreamBotDetector::DEFAULT_PATTERNS;
+    public const array DEFAULT_PATTERNS = UpstreamBotDetector::DEFAULT_PATTERNS;
 
     private UpstreamBotDetector $inner;
 

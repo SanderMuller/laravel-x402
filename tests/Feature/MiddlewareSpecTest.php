@@ -82,9 +82,9 @@ it('returns a fresh instance from each fluent setter', function (): void {
 it('rejects direct property writes', function (): void {
     $spec = RequirePayment::using('0.01');
 
-    expect((new ReflectionClass($spec))->isReadOnly())->toBeTrue()
+    expect(new ReflectionClass($spec)->isReadOnly())->toBeTrue()
         ->and(function () use ($spec): void {
-            (new ReflectionProperty($spec, 'amount'))->setValue($spec, '0.02');
+            new ReflectionProperty($spec, 'amount')->setValue($spec, '0.02');
         })
         ->toThrow(Error::class, 'readonly');
 });
@@ -209,7 +209,7 @@ it('does not flush any per-worker spec state on the Octane RequestReceived liste
      *
      * Octane isn't installed in tests; assert via source inspection.
      */
-    $file = (new ReflectionClass(X402ServiceProvider::class))->getFileName();
+    $file = new ReflectionClass(X402ServiceProvider::class)->getFileName();
     expect($file)->toBeString();
 
     $source = file_get_contents((string) $file);

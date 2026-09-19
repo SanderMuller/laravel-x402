@@ -17,7 +17,6 @@ it('binds FacilitatorResolver to ConfiguredFacilitatorResolver by default', func
 });
 
 it('default resolver returns the bound DispatchingFacilitator-wrapped client', function (): void {
-    /** @var FacilitatorResolver $resolver */
     $resolver = $this->app->make(FacilitatorResolver::class);
 
     $client = $resolver->resolve();
@@ -27,7 +26,6 @@ it('default resolver returns the bound DispatchingFacilitator-wrapped client', f
 });
 
 it('default resolver returns the same instance regardless of context arg', function (): void {
-    /** @var FacilitatorResolver $resolver */
     $resolver = $this->app->make(FacilitatorResolver::class);
 
     expect($resolver->resolve())->toBe($resolver->resolve())
@@ -55,7 +53,6 @@ it('X402::fake() swaps both FacilitatorClient and FacilitatorResolver bindings',
     $client = $this->app->make(FacilitatorClient::class);
     expect($client)->toBeInstanceOf(DispatchingFacilitator::class);
 
-    /** @var FacilitatorResolver $resolver */
     $resolver = $this->app->make(FacilitatorResolver::class);
     expect($resolver)->toBeInstanceOf(FakeFacilitatorResolver::class)
         ->and($resolver->resolve())

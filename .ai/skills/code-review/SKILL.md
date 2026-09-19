@@ -52,8 +52,8 @@ Look for:
 - **Duplicate work**: Same computation running multiple times unnecessarily
 - **Broken flows**: Actions that silently fail, missing error handling for expected failures
 - **Race conditions**: Concurrent requests causing data corruption (missing locks, non-atomic operations)
-- **Laravel compatibility**: Does the code work across all supported Laravel versions (11, 12, 13)?
-- **PHP compatibility**: Does the code work across all supported PHP versions (8.2, 8.3, 8.4)?
+- **Laravel compatibility**: Does the code work across all supported Laravel versions (12, 13)?
+- **PHP compatibility**: Does the code work across all supported PHP versions (8.4, 8.5)?
 
 #### Code Quality & Maintenance
 

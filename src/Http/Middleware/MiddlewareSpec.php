@@ -147,7 +147,7 @@ final readonly class MiddlewareSpec implements Stringable
         );
     }
 
-    public const TOKEN_PREFIX = 'x402-spec-v2-';
+    public const string TOKEN_PREFIX = 'x402-spec-v2-';
 
     public function __toString(): string
     {
