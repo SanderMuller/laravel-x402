@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.0 - 2026-09-19
+
+<!-- verified-sha: 06dfb146068185616ea79fa42e9949cadd2e2216 -->
+### Breaking changes
+
+- **PHP 8.4 and Laravel 12 are now the floor.** `require.php` moved to `^8.4` and `illuminate/*` to `^12.0||^13.0`. Laravel 11 is dropped — the dev toolchain's `laravel/pao` conflicts with `laravel/framework <12.0`, and the suite now runs on Pest 5, which requires PHP `^8.4`. Staying on PHP 8.3 or Laravel 11 means pinning `^0.7.0`. Laravel 12 stays in `require`, but CI exercises Laravel 13 only: Pest 5 needs `symfony/process ^8.1` and Testbench 10 pins `^7.2`, so the pair cannot install together. Laravel 12 breakage is still treated as a bug.
+- **Four public constants gained declared types** — `Payment::STATUS_SETTLED`, `Payment::STATUS_REJECTED`, `MiddlewareSpec::TOKEN_PREFIX` (`string`) and `BotDetector::DEFAULT_PATTERNS` (`array`). Reading them is unchanged; a subclass redeclaring one must use a compatible type. See [UPGRADING.md](UPGRADING.md).
+
+### What's new
+
+- **AWS KMS wallet driver.** Buyer wallet now selectable via `x402.wallet.driver`. The new `kms` value delegates to `X402\Client\AwsKmsWallet` so the signing key never touches the application server — required for SOC2 / FIPS environments. Configure with `X402_WALLET_DRIVER=kms`, `X402_WALLET_KMS_PROVIDER=aws`, `X402_WALLET_AWS_REGION`, `X402_WALLET_AWS_KEY_ID`. The KMS key MUST be `ECC_SECG_P256K1` with usage `SIGN_VERIFY`. `aws/aws-sdk-php` is in `suggest`, not `require` — adopters who do not need it pay no dependency cost; missing the SDK with `driver=kms` raises a clear `composer require aws/aws-sdk-php` hint at first resolve. Hosts that need a custom AWS client (named profile, custom retry, alternate endpoint) bind their own `KmsClient` in the container before this provider boots and the binding is honoured.
+- **Per-tenant KMS reference (`TenantKmsWalletResolver`).** Mirror of the per-tenant `FacilitatorResolver` pattern from 0.6.0. Maps `tenant_id` → KMS key id; default extraction reads `Request::user()->tenant_id`, custom extraction via the `tenantIdResolver:` constructor closure. Copy and adapt rather than subclass.
+- **`MiddlewareSpec` overrides survive `route:cache`.** Specs that set `payTo` / `describing` / `skipWhen` / `onlyBots` now serialise into the middleware string itself via `laravel/serializable-closure`, including closure-based `skipWhen` predicates. The previous registry-token mechanism (which silently dropped state on cached-route boots) is gone — the `Class:0.01,USDC,base` triple form is unchanged for adopters who never use overrides.
+- **`x402:verify-config` reports the active wallet driver** alongside the resolved address, so misconfiguration surfaces at boot rather than at first paid call.
+
+### Migration
+
+- **No public-API change.** `RequirePayment::using()` and the fluent setters behave identically; existing routes that use only the legacy triple keep their wire format. `private_key` is the default driver — adopters who do not opt into `kms` need no env or config change.
+- **`X402\Laravel\Http\Middleware\MiddlewareSpecRegistry` removed.** The class was marked `@internal` since 0.5.0; removal is the lift-out the v2 token mechanism made possible. Adopters who imported it directly (rare — its only caller was the spec itself and the route-list command, both updated) should drop the import.
+- **php-x402 floor bumped to ^0.8.0.** The bump transitively closes a latent ECDSA bug present in php-x402 0.7.x and earlier: `SignatureExporter::toHex65` now enforces EIP-2 canonical low-s, so `PrivateKeyWallet` and `HdWallet` no longer emit "high-s" signatures that USDC `transferWithAuthorization` and OpenZeppelin `ECDSA.recover` reject. Recovery is identical (the address derived from the signature is unchanged), so any application logic that keys off the recovered address still works; only byte-pinned signature fixtures need regen. See upstream UPGRADING for the fixture migration note.
+
+**Full Changelog**: https://github.com/SanderMuller/laravel-x402/compare/0.7.0...0.8.0
+
 ## 0.7.0 - 2026-05-10
 
 ### What's new
@@ -55,6 +78,7 @@ No public-API change in this adapter; no config-key change, no env-var change, n
   $spec = RequirePayment::using('0.01');
   $spec->payTo($address);                      // <-- value discarded; spec unchanged
   Route::get('/x', X)->middleware($spec);
+  
   
   
   
